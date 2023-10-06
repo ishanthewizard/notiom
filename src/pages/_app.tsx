@@ -5,40 +5,40 @@ import Head from 'next/head';
 
 const theme = extendTheme({
   colors: {
-    gray: "#545454"
+    gray: '#545454',
   },
   styles: {
     global: {
       // styles for the `body`
       body: {
-        fontFamily: "DM Sans, sans-serif",
+        fontFamily: 'DM Sans, sans-serif',
         fontWeight: 700,
-        color: "gray",
+        color: 'gray',
       },
     },
   },
   textStyles: {
     h1: {
-      fontSize: "78px",
+      fontSize: '78px',
       fontWeight: 700,
-      color:"gray",
+      color: 'gray',
     },
     h2: {
-      fontSize: "52px",
+      fontSize: '52px',
       fontWeight: 700,
-      color: "gray",
+      color: 'gray',
     },
     body: {
-      fontSize: "20px",
+      fontSize: '20px',
       fontWeight: 700,
-      color: "gray",
+      color: 'gray',
     },
   },
   components: {
     Button: {
       baseStyle: {
-        borderRadius: "10px",
-        backgroundColor: "#2F80ED",
+        borderRadius: '10px',
+        backgroundColor: '#2F80ED',
       },
     },
   },
