@@ -12,10 +12,17 @@ import {
   useDisclosure,
   Button,
   Image,
+  Textarea,
 } from '@chakra-ui/react';
+import { useState } from 'react';
 
-const NewDocButton: React.FC = () => {
+interface NewDocProps {
+  addDoc: (name: string) => void;
+}
+
+const NewDocButton: React.FC<NewDocProps> = ({ addDoc }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [contents, setContents] = useState('');
   return (
     <>
       <button onClick={onOpen}>
@@ -36,17 +43,34 @@ const NewDocButton: React.FC = () => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
-          <ModalCloseButton />
           <ModalBody>
-            <Text>Hi there!!</Text>
+            <Textarea
+              value={contents}
+              onChange={(e) => setContents(e.target.value)}
+            />
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
+            <Button
+              colorScheme="blue"
+              mr={3}
+              onClick={() => {
+                addDoc(contents);
+                onClose();
+                setContents('');
+              }}
+            >
+              Save
             </Button>
-            <Button variant="ghost">Secondary Action</Button>
+            <Button
+              variant="ghost"
+              onClick={() => {
+                setContents('');
+                onClose();
+              }}
+            >
+              Discard
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

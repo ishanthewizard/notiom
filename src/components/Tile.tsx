@@ -11,17 +11,18 @@ import {
   ModalCloseButton,
   useDisclosure,
   Button,
+  Textarea,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 
 interface TileProps {
   text: string;
+  deleteTile: () => void;
 }
 
-const Tile: React.FC<TileProps> = ({ text }) => {
+const Tile: React.FC<TileProps> = ({ text, deleteTile }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [contents, setContents] = useState('');
-
+  const [contents, setContents] = useState(text);
   return (
     <>
       <button onClick={onOpen}>
@@ -40,7 +41,9 @@ const Tile: React.FC<TileProps> = ({ text }) => {
           }}
           transition="transform 0.2s" // Adjust this value for the desired zoom speed
         >
-          <Text textStyle="body">{contents}</Text>
+          <Text textStyle="body">
+            {contents ? contents.substring(0, 10) : 'NO CONTENT'}
+          </Text>
         </Box>
       </button>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -49,18 +52,25 @@ const Tile: React.FC<TileProps> = ({ text }) => {
           <ModalHeader>Modal Title</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <input
+            <Textarea
               value={contents}
               onChange={(e) => setContents(e.target.value)}
             />
-            <Text>Hi there!!</Text>
           </ModalBody>
 
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
+              Save
             </Button>
-            <Button variant="ghost">Secondary Action</Button>
+            <Button
+              variant="ghost"
+              onClick={() => {
+                deleteTile();
+                onClose();
+              }}
+            >
+              Discard Doc
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
