@@ -9,7 +9,7 @@ export default async function handler(req, res) {
       const db = client.db('notiom');
       const documents = await db
         .collection('documents')
-        .find({ user: 'ishanthewizard' })
+        .find({ user: process.env.NEXT_PUBLIC_USER_NAME })
         .toArray();
       res.status(200).json(documents);
     } catch (e) {
