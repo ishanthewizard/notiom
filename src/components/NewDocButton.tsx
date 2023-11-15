@@ -1,4 +1,5 @@
 // components/Tile.js
+import { NotiomDoc } from '@/types';
 import {
   Box,
   Modal,
@@ -13,15 +14,17 @@ import {
   Button,
   Image,
   Textarea,
+  Input,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 
 interface NewDocProps {
-  addDoc: (name: string) => void;
+  addDoc: (doc: { title: string; body: string }) => void;
 }
 
 const NewDocButton: React.FC<NewDocProps> = ({ addDoc }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [title, setTitle] = useState('Untitled');
   const [contents, setContents] = useState('');
   return (
     <>
@@ -43,6 +46,9 @@ const NewDocButton: React.FC<NewDocProps> = ({ addDoc }) => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
+          <ModalHeader>
+            <Input value={title} onChange={(e) => setTitle(e.target.value)} />
+          </ModalHeader>
           <ModalBody>
             <Textarea
               value={contents}
@@ -55,8 +61,9 @@ const NewDocButton: React.FC<NewDocProps> = ({ addDoc }) => {
               colorScheme="blue"
               mr={3}
               onClick={() => {
-                addDoc(contents);
+                addDoc({ title: title, body: contents });
                 onClose();
+                setTitle('');
                 setContents('');
               }}
             >
