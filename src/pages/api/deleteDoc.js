@@ -15,8 +15,6 @@ export default async function handler(req, res) {
         .deleteOne({ _id: new ObjectId(docId) });
 
       // If the document was deleted, the deletedCount will be 1
-      console.log('HELLO THERE!!');
-      console.log(response.deletedCount);
       if (response.deletedCount === 1) {
         res.status(200).json({ message: 'Document successfully deleted.' });
       } else {

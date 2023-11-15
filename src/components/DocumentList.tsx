@@ -32,7 +32,6 @@ const DocumentList: React.FC<DocumentListProps> = ({ documents }) => {
       });
 
       let createdDoc = await response.json();
-      console.log(createdDoc);
       // Update state with the new document returned from the API call
       setAllDocs((prevDocs) => [...prevDocs, createdDoc]);
     } catch (error) {
@@ -42,8 +41,6 @@ const DocumentList: React.FC<DocumentListProps> = ({ documents }) => {
   };
 
   const deletetile = async (docId: string) => {
-    console.log('HEREEEE!!!');
-    console.log(docId);
     try {
       // Make the DELETE request to your API endpoint
       const response = await fetch(`/api/deleteDoc?docId=${docId}`, {
@@ -51,11 +48,8 @@ const DocumentList: React.FC<DocumentListProps> = ({ documents }) => {
       });
 
       if (response.ok) {
-        console.log('DELETED WORK');
-        console.log(docId);
         // Update state to remove the document from the list
         const newDocs = allDocs.filter((doc) => doc._id.toString() !== docId);
-        console.log(newDocs);
         setAllDocs(newDocs);
       } else {
         // Handle any errors if the API request was not successful
@@ -76,7 +70,6 @@ const DocumentList: React.FC<DocumentListProps> = ({ documents }) => {
     >
       <NewDocButton addDoc={addDoc} />
       {allDocs.map((doc, _) => {
-        console.log(doc);
         return (
           <Tile
             doc={doc}

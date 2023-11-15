@@ -27,6 +27,38 @@ const Tile: React.FC<TileProps> = ({ doc, deleteTile }) => {
   const [title, setTitle] = useState(doc.title);
   const [titleDraft, setTitleDraft] = useState(doc.title);
   const [content, setContent] = useState(doc.body);
+
+  const updateEntry = async () => {
+    const updatedDoc = {
+      _id: doc._id, // Assuming you have the document's _id available as 'doc._id'
+      title: title,
+      body: content, // Assuming the body of the document is represented by 'content' state
+    };
+
+    try {
+      // Make the PUT request to the updateDoc API endpoint
+      const response = await fetch('/api/updateDoc', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedDoc),
+      });
+
+      if (!response.ok) {
+        // Handle any errors if the API request was not successful
+        throw new Error('Failed to update the document');
+      }
+
+      // Here you could update the state to reflect the change, if needed
+      // e.g., setAllDocs(prevDocs => prevDocs.map(doc => doc._id === updatedDoc._id ? updatedDoc : doc));
+      // This is just an example and will depend on how you're managing state in your application
+    } catch (error) {
+      // Handle the error state appropriately
+      console.error('There was an error updating the document:', error);
+    }
+  };
+
   return (
     <>
       <button onClick={onOpen}>
@@ -79,6 +111,7 @@ const Tile: React.FC<TileProps> = ({ doc, deleteTile }) => {
               colorScheme="blue"
               mr={3}
               onClick={() => {
+                updateEntry();
                 setTitle(titleDraft);
                 onClose();
               }}

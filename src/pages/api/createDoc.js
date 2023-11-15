@@ -22,8 +22,6 @@ export default async function handler(req, res) {
         res.status(500).json({ error: 'Document insertion not acknowledged' });
       }
     } catch (e) {
-      console.log('HELLOOOOOO');
-      console.log(e.message);
       res.status(500).json({ error: e.message });
     }
   } else {
